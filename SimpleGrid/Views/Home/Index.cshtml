@@ -1,0 +1,88 @@
+﻿<br />
+<div class="row">
+    <div class="col-lg-2">
+        <input class="form-control inputKey" name="Firstname" type="text" placeholder="Firstname" />
+    </div>
+    <div class="col-lg-2">
+        <input class="form-control inputKey" name="Lastname" type="text" placeholder="Lastname" />
+    </div>
+    <div class="col-lg-2">
+        <input class="form-control inputKey" name="Email" type="text" placeholder="Email" />
+    </div>
+    <div class="col-lg-4">
+        <input id="addBtn" class="btn btn-default" type="button" value="Add" />
+    </div>
+</div>
+<br />
+
+<table class="table" id="simpleGrid">
+    <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+        </tr>
+        <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+        </tr>
+        <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+        </tr>
+        <tr>
+            <td>Mik</td>
+            <td>Duen</td>
+            <td>mik@example.com</td>
+        </tr>
+        <tr>
+            <td>Horhe</td>
+            <td>Lorenzo</td>
+            <td>lorenzo@example.com</td>
+        </tr>
+        <tr>
+            <td>Hektor</td>
+            <td>Barbera</td>
+            <td>barbera@example.com</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="text-center" id="paging"></div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $("#paging").addPages($("#simpleGrid"), 10);
+        
+        $(".pagination").on("click", "li", function () {
+            $("#simpleGrid").goToPage(this.innerText);
+        });
+
+        $("#simpleGrid thead th").click(function () {
+            $("#simpleGrid").sortBy(this.innerText);
+        });
+
+        $("#addBtn").click(function () {
+            var result = {};
+            $('.inputKey').map(function () {
+               result[this.name] = $(this).val();
+            });
+
+            for (var item in result)
+                if (result[item] == "") return;
+            
+            $("#simpleGrid").addRow(result);
+        });
+    </script>
+}
+
